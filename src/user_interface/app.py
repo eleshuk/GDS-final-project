@@ -21,7 +21,7 @@ app_ui = ui.page_sidebar(
             ui.output_ui("map_output"),
         ),
         ui.card(
-            ui.output_text_verbatim("message", "Example data"),
+            "Example data, add a table here? Some other results?",
         ),
     ),
     title="Climate-Resilient Crop Selection Tool",
@@ -55,7 +55,7 @@ def server(input, output, session):
         return m
 
     # Display the current coordinates as text
-    # TODO change this to match correct 
+    # TODO change this to match closest municipality
     @output
     @render.text
     def coord_display():
@@ -63,6 +63,8 @@ def server(input, output, session):
         return f"{lat}, {lon}"
     
     # TODO make municipality input based on list from data
+
+    # TODO add overlay with climate zones
 
 # Create the app
 app = App(app_ui, server)
