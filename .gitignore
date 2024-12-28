@@ -1,6 +1,9 @@
 config.yml
 config-checkpoint.yml
 .DS_Store
+<<<<<<< HEAD
 .cache.sqlite
 *.sqlite
 src/data/weather_data/.cache.sqlite
+=======
+>>>>>>> origin/el_features
