@@ -3,3 +3,4 @@ config-checkpoint.yml
 .DS_Store
 .cache.sqlite
 *.sqlite
+src/data/weather_data/.cache.sqlite
