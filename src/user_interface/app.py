@@ -6,27 +6,74 @@ import leafmap.foliumap as leafmap, folium
 import folium
 
 
-app_ui = ui.page_sidebar(
-    ui.sidebar("Input Farm Data", 
-            # # Input for latitude
-        ui.input_numeric("lat_input", "Enter Latitude:", value=39.99),
-        ui.input_numeric("lon_input", "Enter Longitude:", value=-8.22),
-        ui.input_action_button("update_button", "Update Map"),
-        ui.output_text_verbatim("coord_display"),
-        "OR",
-        ui.input_text("municipality_input", "Municipality:", "Enter Municipality")
-    ),
-    ui.layout_columns(
-        ui.card(
-            ui.output_ui("map_output"),
+app_ui = ui.page_fluid(
+    ui.page_navbar(
+        # First tab (Panel A)
+        ui.nav_panel(
+            "Dashboard",
+            ui.page_sidebar(
+                ui.sidebar(
+                    "Input Farm Data",
+                    # Input for latitude
+                    ui.input_numeric("lat_input", "Enter Latitude:", value=39.99),
+                    ui.input_numeric("lon_input", "Enter Longitude:", value=-8.22),
+                    ui.input_action_button("update_button", "Update Map"),
+                    ui.output_text_verbatim("coord_display"),
+                    "OR",
+                    ui.input_text("municipality_input", "Municipality:", placeholder="Enter Municipality"),
+                    ui.input_numeric("property_size_input", "Enter Property Size:", value=None),
+                ),
+                ui.row(
+                    # First card with a width of 6 columns
+                    ui.column(
+                        6,
+                        ui.card(
+                            ui.output_ui("map_output")
+                        )
+                    ),
+                    # Second card with a width of 6 columns
+                    ui.column(
+                        6,
+                        ui.card(
+                            ui.p("Your soil type is: *soil*: \n The characteristics of this soil are: *characteristics")
+                        ),
+                        ui.card(
+                            ui.p("Card for data 2.")
+                        ),
+                        ui.card(
+                            ui.p("Card for data 2.")
+                        )
+                    )
+                ),
+                ui.row(
+                    # Third card with a width of 6 columns
+                    ui.column(
+                        6,
+                        ui.card(
+                            "Card 3",
+                            ui.p("Another medium-sized card.")
+                        )
+                    ),
+                    # Fourth card with a width of 6 columns
+                    ui.column(
+                        6,
+                        ui.card(
+                            "Card 4",
+                            ui.p("Same-sized card as Card 3.")
+                        )
+                    )
+                ),
+            ),
         ),
-        ui.card(
-            "Example data, add a table here? Some other results?",
+        # Second tab (Panel B)
+        ui.nav_panel(
+            "Documentation",
+            ui.p("Page B content")
         ),
-    ),
-    title="Climate-Resilient Crop Selection Tool",
+        title="Climate-Resilient Crop Selection Tool",  
+        id="page"  
+    )
 )
-
 
 # Define server
 def server(input, output, session):
@@ -48,7 +95,9 @@ def server(input, output, session):
 
         # Create the Leaflet map
         m = leafmap.Map(center=(lat, lon), zoom=6)
-        # Add a marker at the given location
+        # Add topographical map
+        m.add_basemap("OpenTopoMap")
+        # Add a marker at the given location 
         m.add_marker(location=(lat, lon), popup=f"Lat: {lat}, Lon: {lon}")
 
         # Return the Leaflet map
