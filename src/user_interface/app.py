@@ -4,7 +4,11 @@ from shinywidgets import output_widget, render_widget
 import leafmap.foliumap as leafmap, folium
 # from branca.element import Figure
 import folium
+from get_municipalities import get_municipalities_list
 
+
+# Get municipalities list
+municipalities_list = get_municipalities_list()
 
 app_ui = ui.page_fluid(
     ui.page_navbar(
@@ -20,7 +24,13 @@ app_ui = ui.page_fluid(
                     ui.input_action_button("update_button", "Update Map"),
                     ui.output_text_verbatim("coord_display"),
                     "OR",
-                    ui.input_text("municipality_input", "Municipality:", placeholder="Enter Municipality"),
+                    # ui.input_text("municipality_input", "Municipality:", placeholder="Enter Municipality"),
+                    ui.input_selectize(
+                        "municipality_input",
+                        "Municipality:",
+                        choices=municipalities_list
+                        # placeholder="Enter Municipality"
+                    ),
                     ui.input_numeric("property_size_input", "Enter Property Size:", value=None),
                 ),
                 ui.row(
@@ -35,7 +45,14 @@ app_ui = ui.page_fluid(
                     ui.column(
                         6,
                         ui.card(
-                            ui.p("Your soil type is: *soil*: \n The characteristics of this soil are: *characteristics")
+                            ui.card_header("Crop Recommendations:"),
+                                ui.p(
+                                    "Wheat", ui.br(),
+                                    "Corn", ui.br(),
+                                    "Soy", ui.br(),
+                                    "Almonds", ui.br(),
+                                    "Yams"
+                                )
                         ),
                         ui.card(
                             ui.p("Card for data 2.")
@@ -77,12 +94,17 @@ app_ui = ui.page_fluid(
 
 # Define server
 def server(input, output, session):
+
+    @output
+    @render.text
+    def selected_municipality():
+        return f"Selected Municipality: {input.municipality_input}"
    
     coords = reactive.Value((39.99, -8.22))  # Initialize with default coordinates
 
     # Effect to update coordinates only when the button is clicked
     @reactive.Effect
-    def update_coords_on_click():
+    def update_button():
         if input.update_button():  # Only triggers when the button is clicked
             coords.set((input.lat_input(), input.lon_input()))
 
