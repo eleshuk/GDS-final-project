@@ -39,11 +39,11 @@ app_ui = ui.page_fluid(
                         6,
                         ui.card(
                             ui.output_ui("map_output")
-                        )
+                        ),
                     ),
                     # Second card with a width of 6 columns
                     ui.column(
-                        6,
+                        4,
                         ui.card(
                             ui.card_header("Crop Recommendations:"),
                                 ui.p(
@@ -53,13 +53,17 @@ app_ui = ui.page_fluid(
                                     "Almonds", ui.br(),
                                     "Yams"
                                 )
-                        ),
-                        ui.card(
-                            ui.p("Card for data 2.")
-                        ),
-                        ui.card(
-                            ui.p("Card for data 2.")
-                        )
+                            ),
+                            
+                            ui.card(
+                                ui.card_header("Average Minumum Temperature in Your Region:"),
+                                ui.p("Min: ")
+                            ),
+                            ui.card(
+                                ui.card_header("Average Maxiumum Temperature in Your Region:"),
+                                ui.p("Max: ")
+                            )
+                        # ),
                     )
                 ),
                 ui.row(
@@ -74,10 +78,7 @@ app_ui = ui.page_fluid(
                     # Fourth card with a width of 6 columns
                     ui.column(
                         6,
-                        ui.card(
-                            "Card 4",
-                            ui.p("Same-sized card as Card 3.")
-                        )
+
                     )
                 ),
             ),
