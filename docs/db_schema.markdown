@@ -5,23 +5,23 @@ Table: market_value
     "properties": {
         "MarketValueID" {
             "type": "int",
-            "description":""
+            "description":"unique id for stock market data"
         },
         "CropID" {
             "type": "int",
-            "description":""
+            "description":"foreign id for crop that the market data is for"
         },
         "Date" {
             "type": "date",
-            "description":""
+            "description":"the date the data was recorded"
         }, 
         "PricePerTon" {
             "type": "float",
-            "description":""
+            "description":"market price per ton (€)"
         }, 
         "DemandIndex" {
             "type": "float",
-            "description":""
+            "description":"Demand index for crop. between 0 and 1"
         }
     } 
     "required": ["MarketValueID", "CropID". "Date". "PricePerTon"]
@@ -32,28 +32,32 @@ Table: crop
     "properties" {
         "CropID" {
             "type":"int",
-            "description":""
+            "description":"unique id for crop data"
         }, 
         "Name" {
             "type":"varchar"
             "length":100,
-            "description":""
+            "description":"name of crop"
         }, 
         "CarbonFootprint" {
             "type":"float",
             "minimum":-10,
             "maximum":10,
-            "description":""
+            "description":"scale -10 to 10, with -10 being large carbon storage potential, and 10 being large carbom emitter"
         },
         "WaterRequirements" {
             "type":"float",
-            "description":""
+            "description":"water requirement of crop in mm"
         },
-        ProfitabilityIndex" {
+        "ProfitabilityIndex" {
             "type":"float",
             "minimum":0,
             "maximum":1,
-            "description":""
+            "description":"profitability index for crop. between 0 and 1"
+        },
+        "RotationCompatibility" {
+            "type":"int",
+            "description":"number of months post harvest that crop can be planted again"
         },
     }
     "required": ["CropID", "Name". "WaterRequirements"]
@@ -76,7 +80,7 @@ Table: crop_yield
         },
         "YieldAmount" {
             "type":"float",
-            "description":""
+            "description":"crop yield in tonnes/hectare"
         }
     }
     "required": ["YieldID", "CropID". "YieldAmount"]
@@ -115,15 +119,15 @@ Table: weather
     "properties" {
         "WeatherID" {
             "type":"int",
-            "description":""
+            "description":"unique id for weather data"
         }, 
         "RegionID" {
             "type":"int",
-            "description":""
+            "description":"foreign key for region"
         }, 
         "Date" {
             "type":"date",
-            "description":""
+            "description":"date weather data was recorded"
         },
         "TemperatureMax" {
             "type":"varchar",
@@ -308,15 +312,15 @@ Table: crop_soil_compatability
      "properties" {
         "CompatibilityID" {
             "type":"int",
-            "description":""
+            "description":"unique id for crop soil compatibility"
         }, 
         "CropID" {
             "type":"int",
-            "description":""
+            "description":"foreign id for crop table"
         }, 
         "SoilTypeID" {
             "type":"int",
-            "description":""
+            "description":"foreign id for soil type table"
         }
     }
     "required": ["CompatibilityID", "CropID". "SoilTypeID"]
