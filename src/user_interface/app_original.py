@@ -6,10 +6,11 @@ import leafmap.foliumap as leafmap, folium
 import folium
 from get_municipalities import get_municipalities_list
 
+
 # Get municipalities list
 municipalities_list = get_municipalities_list()
 
-app_ui = ui.page_fillable(
+app_ui = ui.page_fluid(
     ui.page_navbar(
         # First tab (Panel A)
         ui.nav_panel(
@@ -31,25 +32,58 @@ app_ui = ui.page_fillable(
                         # placeholder="Enter Municipality"
                     ),
                     ui.input_numeric("property_size_input", "Enter Property Size:", value=None),
-                ), 
-                ui.layout_columns( 
-                    ui.card(
-                        ui.output_ui("map_output"),
-                        height="250px"),
-                    ui.card("Weather Data"), 
-                    ui.card("Crop Recommendation"), 
-                    col_widths = [4, 4, 4]
                 ),
-                    ui.layout_columns( 
-                    ui.card("Crop Recommendations"), 
-                    ui.card("Card 2"), 
-                    ui.card("Card 3"), 
-                    col_widths = [6, 3, 3]
-                # ) 
+                ui.row(
+                    # First card with a width of 6 columns
+                    ui.column(
+                        6,
+                        ui.card(
+                            ui.output_ui("map_output")
+                        ),
+                    ),
+                    # Second card with a width of 6 columns
+                    ui.column(
+                        4,
+                        ui.card(
+                            ui.card_header("Crop Recommendations:"),
+                                ui.p(
+                                    "Wheat", ui.br(),
+                                    "Corn", ui.br(),
+                                    "Soy", ui.br(),
+                                    "Almonds", ui.br(),
+                                    "Yams"
+                                )
+                            ),
+                            
+                            ui.card(
+                                ui.card_header("Average Minumum Temperature in Your Region:"),
+                                ui.p("Min: ")
+                            ),
+                            ui.card(
+                                ui.card_header("Average Maxiumum Temperature in Your Region:"),
+                                ui.p("Max: ")
+                            )
+                        # ),
+                    )
                 ),
-            )
+                ui.row(
+                    # Third card with a width of 6 columns
+                    ui.column(
+                        6,
+                        ui.card(
+                            "Card 3",
+                            ui.p("Another medium-sized card.")
+                        )
+                    ),
+                    # Fourth card with a width of 6 columns
+                    ui.column(
+                        6,
+
+                    )
+                ),
+            ),
         ),
-                # Second tab (Panel B)
+        # Second tab (Panel B)
         ui.nav_panel(
             "Documentation",
             ui.p("Page B content")
@@ -59,6 +93,7 @@ app_ui = ui.page_fillable(
     )
 )
 
+# Define server
 def server(input, output, session):
 
     @output
@@ -70,7 +105,6 @@ def server(input, output, session):
 
     # Effect to update coordinates only when the button is clicked
     @reactive.Effect
-    # TODO: move this into another file 
     def update_button():
         if input.update_button():  # Only triggers when the button is clicked
             coords.set((input.lat_input(), input.lon_input()))
@@ -83,7 +117,7 @@ def server(input, output, session):
         lat, lon = coords()
 
         # Create the Leaflet map
-        m = leafmap.Map(center=(lat, lon), zoom=5.5)
+        m = leafmap.Map(center=(lat, lon), zoom=6)
         # Add topographical map
         m.add_basemap("OpenTopoMap")
         # Add a marker at the given location 
