@@ -25,7 +25,7 @@ Table: market_value
             "description":"Demand index for crop"
         }
     } 
-    "required": ["MarketValueID", "CropID", "Date". "PricePerTon"]
+    "required": ["MarketValueID", "CropID", "Date", "PricePerTon"]
 }
 
 Table: crop
@@ -84,7 +84,7 @@ Table: crop_yield
             "description":"crop yield in tonnes/hectare"
         }
     }
-    "required": ["YieldID", "CropID". "YieldAmount"]
+    "required": ["YieldID", "CropID", "YieldAmount"]
 }
 
 Table: region 
@@ -148,7 +148,7 @@ Table: weather
             "description":"rainfall in millimetres"
         }
     }
-    "required": ["CropID", "Name". "WaterRequirements"]
+    "required": ["CropID", "Name", "WaterRequirements"]
 }
 
 Table: soil_aptitude
