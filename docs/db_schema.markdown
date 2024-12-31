@@ -199,7 +199,7 @@ Table: soil_class
             "description":"suitability for agricultural use"
         },
     }
-    "required": ["SoilClassID", "Name". "Limitations", "ErosionRisk","SuitableUse"]
+    "required": ["SoilClassID", "Name", "Limitations", "ErosionRisk","SuitableUse"]
 }
 
 Table: soil_subclass
@@ -221,7 +221,7 @@ Table: soil_subclass
             "description":"soil subclass description"
         }
     }
-    "required": ["SoilSubClassID", "Name". "Description"]
+    "required": ["SoilSubClassID", "Name", "Description"]
 }
 
 Table: soil_unit
@@ -264,20 +264,22 @@ Table: soil_unit
             "options":["0", "1"],
             "description":"binary that indicates whether soil is humic or not",
         },
-        "Mollic" {
+        "Molic" {
             "type":"int",
+            "options":["0", "1"],
             "description":"binary that indicates whether soil is molic or not",
         },
-        "Limestone" {
+        "Calcareous" {
             "type":"int",
             "options":["0", "1"],
             "description":"binary that indicates whether soil is calcareous or not",
         },
-        "Standard" {
+        "Normal" {
             "type":"int",
-            "description":"",
+            "options":["0", "1"],
+            "description":"binary that indicates whether soil is normal or not",
         },
-        "Cambisol" {
+        "Cambic" {
             "type":"int",
             "options":["0", "1"],
             "description":"binary that indicates whether soil is calcareous or not",
@@ -285,10 +287,10 @@ Table: soil_unit
         "AddCharacteristics" {
             "type":"varchar",
             "length": 300,
-            "description":""
+            "description":"additional soil characteristics not qualified by those in this table"
         },
     }
-    "required": ["SoilUnitID", "Name". "Description"]
+    "required": ["SoilUnitID", "Name", "Description"]
 }
 
 Table: soil_type
@@ -300,19 +302,19 @@ Table: soil_type
         }, 
         "RegionID" {
             "type":"int",
-            "description":"unique id for region data"
+            "description":"foreign key for region table"
         }, 
         "SoilUnitID" {
             "type":"int",
-            "description":"uique id for soil unit data"
+            "description":"foreign id for soil unit table"
         }, 
         "SoilClassID" {
             "type":"int",
-            "description":"unique id for soil class data"
+            "description":"foreign id for soil class table"
         }, 
         "SoilSubClassID" {
             "type":"int",
-            "description":"unique id for soil subclass data"
+            "description":"foreign id for soil subclass data"
         }, 
     }
     "required": ["SoilTypeID", "RegionID", "SoilUnitID", "SoilClassID", "SoilSubClassID"]
@@ -334,5 +336,5 @@ Table: crop_soil_compatability
             "description":"foreign id for soil type table"
         }
     }
-    "required": ["CompatibilityID", "CropID". "SoilTypeID"]
+    "required": ["CompatibilityID", "CropID", "SoilTypeID"]
 }
