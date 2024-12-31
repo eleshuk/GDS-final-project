@@ -21,7 +21,8 @@ Table: market_value
         }, 
         "DemandIndex" {
             "type": "float",
-            "description":"Demand index for crop. between 0 and 1"
+            "options":["0", "1"],
+            "description":"Demand index for crop"
         }
     } 
     "required": ["MarketValueID", "CropID". "Date". "PricePerTon"]
@@ -217,7 +218,7 @@ Table: soil_subclass
         "Description" {
             "type":"varchar",
             "length": 200,
-            "description":""
+            "description":"soil subclass description"
         }
     }
     "required": ["SoilSubClassID", "Name". "Description"]
@@ -228,44 +229,49 @@ Table: soil_unit
      "properties" {
         "SoilUnitID" {
             "type":"int",
-            "description":""
+            "description":"unique id for soil unit data"
         }, 
         "Name" {
             "type":"varchar",
             "length": 10,
-            "description":""
+            "description":"name of the soil unit"
         }, 
         "Description" {
             "type":"varchar",
             "length": 200,
-            "description":""
+            "description":"soil units description"
         },
         "Texture" {
             "type":"varchar",
             "length": 10,
-            "description":""
+            "options":["heavy", "medium", "light"],
+            "description":"description of soil texture"
         },
         "Salinity" {
             "type":"varchar",
             "length": 10,
-            "description":""
+            "options":["high", "moderate", "low"],
+            "description":"soil salinity"
         },
         "Colour" {
             "type":"varchar",
             "length": 40,
-            "description":""
+            "options":["red or yellow", "brown"],
+            "description":"soil color description"
         },
         "Humic" {
             "type":"int",
-            "description":"",
+            "options":["0", "1"],
+            "description":"binary that indicates whether soil is humic or not",
         },
         "Mollic" {
             "type":"int",
-            "description":"",
+            "description":"binary that indicates whether soil is molic or not",
         },
         "Limestone" {
             "type":"int",
-            "description":"",
+            "options":["0", "1"],
+            "description":"binary that indicates whether soil is calcareous or not",
         },
         "Standard" {
             "type":"int",
@@ -273,7 +279,8 @@ Table: soil_unit
         },
         "Cambisol" {
             "type":"int",
-            "description":"",
+            "options":["0", "1"],
+            "description":"binary that indicates whether soil is calcareous or not",
         },
         "AddCharacteristics" {
             "type":"varchar",
