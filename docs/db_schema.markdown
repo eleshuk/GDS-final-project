@@ -57,7 +57,7 @@ Table: crop
         },
         "RotationCompatibility" {
             "type":"int",
-            "description":"number of months post harvest that crop can be planted again"
+            "description":"crop rotation cycle"
         },
     }
     "required": ["CropID", "Name". "WaterRequirements"]
@@ -68,15 +68,15 @@ Table: crop_yield
     "properties" {
         "YieldID" {
             "type":"int",
-            "description":""
+            "description":"unique id for yield data"
         }, 
         "CropID" {
             "type":"int",
-            "description":""
+            "description":"unique id for crop data"
         }, 
         "Year" {
             "type":"year",
-            "description":""
+            "description":"year in which the crop yield was recorded or measured"
         },
         "YieldAmount" {
             "type":"float",
@@ -172,7 +172,7 @@ Table: soil_class
      "properties" {
         "SoilClassID" {
             "type":"int",
-            "description":""
+            "description":"unique id for soil class data"
         }, 
         "Name" {
             "type":"varchar",
@@ -285,26 +285,26 @@ Table: soil_type
      "properties" {
         "SoilTypeID" {
             "type":"int",
-            "description":""
+            "description":"unique id for soil type data"
         }, 
         "RegionID" {
             "type":"int",
-            "description":""
+            "description":"unique id for region data"
         }, 
         "SoilUnitID" {
             "type":"int",
-            "description":""
+            "description":"uique id for soil unit data"
         }, 
         "SoilClassID" {
             "type":"int",
-            "description":""
+            "description":"unique id for soil class data"
         }, 
         "SoilSubClassID" {
             "type":"int",
-            "description":""
+            "description":"unique id for soil subclass data"
         }, 
     }
-    "required": ["SoilTypeID", "RegionID". "SoilUnitID", "SoilClassID", "SoilSubClassID"]
+    "required": ["SoilTypeID", "RegionID", "SoilUnitID", "SoilClassID", "SoilSubClassID"]
 }
 
 Table: crop_soil_compatability
