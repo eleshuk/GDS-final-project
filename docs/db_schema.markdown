@@ -9,11 +9,11 @@ Table: market_value
         },
         "CropID" {
             "type": "int",
-            "description":"foreign id for crop that the market data is for"
+            "description":"foreign id for crop market data"
         },
         "Date" {
             "type": "date",
-            "description":"the date the data was recorded"
+            "description":"the year that the data corresponds to"
         }, 
         "PricePerTon" {
             "type": "float",
@@ -25,7 +25,7 @@ Table: market_value
             "description":"Demand index for crop"
         }
     } 
-    "required": ["MarketValueID", "CropID". "Date". "PricePerTon"]
+    "required": ["MarketValueID", "CropID", "Date". "PricePerTon"]
 }
 
 Table: crop
@@ -54,14 +54,14 @@ Table: crop
             "type":"float",
             "minimum":0,
             "maximum":1,
-            "description":"profitability index for crop. between 0 and 1"
+            "description":"profitability index for crop, between 0 and 1"
         },
         "RotationCompatibility" {
             "type":"int",
             "description":"crop rotation cycle"
         },
     }
-    "required": ["CropID", "Name". "WaterRequirements"]
+    "required": ["CropID", "Name", "WaterRequirements"]
 }
 
 Table: crop_yield
@@ -73,7 +73,7 @@ Table: crop_yield
         }, 
         "CropID" {
             "type":"int",
-            "description":"unique id for crop data"
+            "description":"foreign id for crop data"
         }, 
         "Year" {
             "type":"year",
@@ -87,23 +87,27 @@ Table: crop_yield
     "required": ["YieldID", "CropID". "YieldAmount"]
 }
 
-Table: region - EDIT
+Table: region 
 {
     "properties" {
         "RegionID" {
             "type":"int",
-            "description":""
+            "description":"unique id for region data"
         }, 
-        "Name" {
+        "MunicipalityID" {
+            "type":"int",
+            "description":"foreign id for municipality table"
+        }, 
+        "Freguesias" {
             "type":"varchar",
-            "length":100
-            "description":""
-        }, 
+            "length": 50,
+            "description":"freguesia name"
+        }
         "DesertificationRisk" {
             "type":"varchar",
             "length": 20,
             "options":["susceptible", "not susceptible"],
-            "description":""
+            "description":"desertification risk for the region"
         }
         "ClimateZone" {
             "type":"varchar",
