@@ -156,12 +156,13 @@ Table: soil_aptitude
      "properties" {
         "AptitudeID" {
             "type":"int",
-            "description":""
+            "description":"unique id for soil aptitude use data"
         }, 
         "Level" {
             "type":"varchar",
             "length": 100,
-            "description":""
+            "options":["1", "2", "3", "4", "5", "6"],
+            "description":"soil aptitude use class level defined from 1 to 6"
         }, 
         "Nomenclature" {
             "type":"varchas",
