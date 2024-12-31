@@ -113,7 +113,7 @@ Table: region
             "type":"varchar",
             "length":50,
             "options":["Csb", "Csa", "mixed"],
-            "description":""
+            "description":"climate zone that the region sits in"
         }
     }
     "required": ["RegionID", "Name"]
@@ -167,10 +167,10 @@ Table: soil_aptitude
         "Nomenclature" {
             "type":"varchas",
             "length": 100,
-            "description":""
+            "description":"soil aptitude nomenclature"
         },
     }
-    "required": ["AptitudeID", "Level". "Nomenclature"]
+    "required": ["AptitudeID", "Level", "Nomenclature"]
 }
 
 Table: soil_class
