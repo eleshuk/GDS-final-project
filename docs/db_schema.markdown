@@ -177,22 +177,25 @@ Table: soil_class
         "Name" {
             "type":"varchar",
             "length": 10,
-            "description":""
+            "description":"name of the soil unit"
         }, 
         "Limitations" {
             "type":"varchar",
             "length": 30,
-            "description":""
+            "options":["few or none", "moderate", "moderate to severe, "severe", "highly severe"],
+            "description":"agricultural limitations presented by soil type"
         },
         "ErosionRisk" {
             "type":"varchar",
             "length": 30,
-            "description":""
+            "options":["no or low risk", "low to moderate", "moderate to high", "high to very high", "very high"],
+            "description":"susceptibility and risk of erosion"
         },
         "SuitableUse" {
             "type":"varchar",
             "length": 200,
-            "description":""
+            "options":["intensive agriculture", "moderate intensity", "low intensity agriculture", "few or moderate", "severe to very severe"],
+            "description":"suitability for agricultural use"
         },
     }
     "required": ["SoilClassID", "Name". "Limitations", "ErosionRisk","SuitableUse"]
