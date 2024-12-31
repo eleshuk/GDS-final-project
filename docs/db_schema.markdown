@@ -206,12 +206,13 @@ Table: soil_subclass
      "properties" {
         "SoilSubClassID" {
             "type":"int",
-            "description":""
+            "description":"unique id for soil subclass"
         }, 
         "Name" {
             "type":"varchar",
             "length": 100,
-            "description":""
+            "options":["e", "h", "s"],
+            "description":"soil subclass definitition"
         }, 
         "Description" {
             "type":"varchar",
