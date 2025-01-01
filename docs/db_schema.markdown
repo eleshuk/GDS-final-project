@@ -9,11 +9,11 @@ Table: market_value
         },
         "CropID" {
             "type": "int",
-            "description":"foreign id for crop that the market data is for"
+            "description":"foreign id for crop market data"
         },
         "Date" {
             "type": "date",
-            "description":"the date the data was recorded"
+            "description":"the year that the data corresponds to"
         }, 
         "PricePerTon" {
             "type": "float",
@@ -21,10 +21,11 @@ Table: market_value
         }, 
         "DemandIndex" {
             "type": "float",
-            "description":"Demand index for crop. between 0 and 1"
+            "options":["0", "1"],
+            "description":"Demand index for crop"
         }
     } 
-    "required": ["MarketValueID", "CropID". "Date". "PricePerTon"]
+    "required": ["MarketValueID", "CropID", "Date", "PricePerTon", "DemandIndex"]
 }
 
 Table: crop
@@ -34,7 +35,7 @@ Table: crop
             "type":"int",
             "description":"unique id for crop data"
         }, 
-        "Name" {
+        "CropName" {
             "type":"varchar"
             "length":100,
             "description":"name of crop"
@@ -53,14 +54,14 @@ Table: crop
             "type":"float",
             "minimum":0,
             "maximum":1,
-            "description":"profitability index for crop. between 0 and 1"
+            "description":"profitability index for crop, between 0 and 1"
         },
         "RotationCompatibility" {
             "type":"int",
-            "description":"number of months post harvest that crop can be planted again"
+            "description":"crop rotation cycle"
         },
     }
-    "required": ["CropID", "Name". "WaterRequirements"]
+    "required": ["CropID", "CropName", "CarbonFootPrint", "WaterRequirements", "ProfitabilityIndex", "RotationCompatibility"]
 }
 
 Table: crop_yield
@@ -68,51 +69,72 @@ Table: crop_yield
     "properties" {
         "YieldID" {
             "type":"int",
-            "description":""
+            "description":"unique id for yield data"
         }, 
         "CropID" {
             "type":"int",
-            "description":""
+            "description":"foreign id for crop data"
         }, 
         "Year" {
             "type":"year",
-            "description":""
+            "description":"year in which the crop yield was recorded or measured"
         },
         "YieldAmount" {
             "type":"float",
             "description":"crop yield in tonnes/hectare"
         }
     }
-    "required": ["YieldID", "CropID". "YieldAmount"]
+    "required": ["YieldID", "CropID", "YieldAmount"]
 }
 
-Table: region - EDIT
+Table: region 
 {
     "properties" {
         "RegionID" {
             "type":"int",
-            "description":""
+            "description":"unique id for region data"
         }, 
-        "Name" {
+        "MunicipalityID" {
+            "type":"int",
+            "description":"foreign id for municipality table"
+        }, 
+        "Freguesias" {
             "type":"varchar",
-            "length":100
-            "description":""
-        }, 
+            "length": 50,
+            "description":"freguesia name"
+        },
         "DesertificationRisk" {
             "type":"varchar",
             "length": 20,
             "options":["susceptible", "not susceptible"],
-            "description":""
-        }
+            "description":"desertification risk for the region"
+        },
         "ClimateZone" {
             "type":"varchar",
             "length":50,
             "options":["Csb", "Csa", "mixed"],
-            "description":""
+            "description":"climate zone that the region sits in"
         }
     }
-    "required": ["RegionID", "Name"]
+    "required": ["RegionID", "MunicipalityID", "DesertificationRisk", "ClimateZone"]
 }
+
+Table: municipality 
+{
+    "properties" {
+        "MunicipalityID" {
+            "type":"int",
+            "description":"unique id for municipality table"
+        }, 
+        "Municipality" {
+            "type":"varchar",
+            "length": 50,
+            "description":"municipality name"
+        }
+    }
+    "required": ["MunicipalityID", "Municipality"]
+}
+        
 
 Table: weather
 {
@@ -121,9 +143,9 @@ Table: weather
             "type":"int",
             "description":"unique id for weather data"
         }, 
-        "RegionID" {
+        "MunicipalityID" {
             "type":"int",
-            "description":"foreign key for region"
+            "description":"foreign key for municipality"
         }, 
         "Date" {
             "type":"date",
@@ -143,7 +165,7 @@ Table: weather
             "description":"rainfall in millimetres"
         }
     }
-    "required": ["CropID", "Name". "WaterRequirements"]
+    "required": ["WeatherID", "MunicipalityID", "Date", "TemperatureMax", "TemperatureMin", "Precipitation"]
 }
 
 Table: soil_aptitude
@@ -151,20 +173,21 @@ Table: soil_aptitude
      "properties" {
         "AptitudeID" {
             "type":"int",
-            "description":""
+            "description":"unique id for soil aptitude use data"
         }, 
         "Level" {
             "type":"varchar",
             "length": 100,
-            "description":""
+            "options":["1", "2", "3", "4", "5", "6"],
+            "description":"soil aptitude use class level defined from 1 to 6"
         }, 
         "Nomenclature" {
             "type":"varchas",
             "length": 100,
-            "description":""
+            "description":"soil aptitude nomenclature"
         },
     }
-    "required": ["AptitudeID", "Level". "Nomenclature"]
+    "required": ["AptitudeID", "Level", "Nomenclature"]
 }
 
 Table: soil_class
@@ -172,30 +195,33 @@ Table: soil_class
      "properties" {
         "SoilClassID" {
             "type":"int",
-            "description":""
+            "description":"unique id for soil class data"
         }, 
-        "Name" {
+        "SoilClassName" {
             "type":"varchar",
             "length": 10,
-            "description":""
+            "description":"name of the soil unit"
         }, 
         "Limitations" {
             "type":"varchar",
             "length": 30,
-            "description":""
+            "options":["few or none", "moderate", "moderate to severe, "severe", "highly severe"],
+            "description":"agricultural limitations presented by soil type"
         },
         "ErosionRisk" {
             "type":"varchar",
             "length": 30,
-            "description":""
+            "options":["no or low risk", "low to moderate", "moderate to high", "high to very high", "very high"],
+            "description":"susceptibility and risk of erosion"
         },
         "SuitableUse" {
             "type":"varchar",
             "length": 200,
-            "description":""
+            "options":["intensive agriculture", "moderate intensity", "low intensity agriculture", "few or moderate", "severe to very severe"],
+            "description":"suitability for agricultural use"
         },
     }
-    "required": ["SoilClassID", "Name". "Limitations", "ErosionRisk","SuitableUse"]
+    "required": ["SoilClassID", "SoilClassName", "Limitations", "ErosionRisk","SuitableUse"]
 }
 
 Table: soil_subclass
@@ -203,20 +229,21 @@ Table: soil_subclass
      "properties" {
         "SoilSubClassID" {
             "type":"int",
-            "description":""
+            "description":"unique id for soil subclass"
         }, 
-        "Name" {
+        "SoilSubClassName" {
             "type":"varchar",
             "length": 100,
-            "description":""
+            "options":["e", "h", "s"],
+            "description":"soil subclass definitition"
         }, 
         "Description" {
             "type":"varchar",
             "length": 200,
-            "description":""
+            "description":"soil subclass description"
         }
     }
-    "required": ["SoilSubClassID", "Name". "Description"]
+    "required": ["SoilSubClassID", "SoilSubClassName", "Description"]
 }
 
 Table: soil_unit
@@ -224,60 +251,68 @@ Table: soil_unit
      "properties" {
         "SoilUnitID" {
             "type":"int",
-            "description":""
+            "description":"unique id for soil unit data"
         }, 
-        "Name" {
+        "SoilUnitName" {
             "type":"varchar",
             "length": 10,
-            "description":""
+            "description":"name of the soil unit"
         }, 
         "Description" {
             "type":"varchar",
             "length": 200,
-            "description":""
+            "description":"soil units description"
         },
         "Texture" {
             "type":"varchar",
             "length": 10,
-            "description":""
+            "options":["heavy", "medium", "light"],
+            "description":"description of soil texture"
         },
         "Salinity" {
             "type":"varchar",
             "length": 10,
-            "description":""
+            "options":["high", "moderate", "low"],
+            "description":"soil salinity"
         },
         "Colour" {
             "type":"varchar",
             "length": 40,
-            "description":""
+            "options":["red or yellow", "brown"],
+            "description":"soil color description"
         },
         "Humic" {
             "type":"int",
-            "description":"",
+            "options":["0", "1"],
+            "description":"binary that indicates whether soil is humic or not",
         },
-        "Mollic" {
+        "Molic" {
             "type":"int",
-            "description":"",
+            "options":["0", "1"],
+            "description":"binary that indicates whether soil is molic or not",
         },
-        "Limestone" {
+        "Calcareous" {
             "type":"int",
-            "description":"",
+            "options":["0", "1"],
+            "description":"binary that indicates whether soil is calcareous or not",
         },
-        "Standard" {
+        "Normal" {
             "type":"int",
-            "description":"",
+            "options":["0", "1"],
+            "description":"binary that indicates whether soil is normal or not",
         },
-        "Cambisol" {
+        "Cambic" {
             "type":"int",
-            "description":"",
+            "options":["0", "1"],
+            "description":"binary that indicates whether soil is cambic or not",
         },
         "AddCharacteristics" {
             "type":"varchar",
             "length": 300,
-            "description":""
+            "description":"additional soil characteristics not qualified by those in this table"
         },
     }
-    "required": ["SoilUnitID", "Name". "Description"]
+    "required": ["SoilUnitID", "SoilUnitName", "Description", "Texture", "Salinity", "Colour", "Humic", "Molic", "Calcareous", "Normal", "Cambic", "AddCharacteristics"]
 }
 
 Table: soil_type
@@ -285,26 +320,26 @@ Table: soil_type
      "properties" {
         "SoilTypeID" {
             "type":"int",
-            "description":""
+            "description":"unique id for soil type data"
         }, 
         "RegionID" {
             "type":"int",
-            "description":""
+            "description":"foreign key for region table"
         }, 
         "SoilUnitID" {
             "type":"int",
-            "description":""
+            "description":"foreign id for soil unit table"
         }, 
         "SoilClassID" {
             "type":"int",
-            "description":""
+            "description":"foreign id for soil class table"
         }, 
         "SoilSubClassID" {
             "type":"int",
-            "description":""
+            "description":"foreign id for soil subclass data"
         }, 
     }
-    "required": ["SoilTypeID", "RegionID". "SoilUnitID", "SoilClassID", "SoilSubClassID"]
+    "required": ["SoilTypeID", "RegionID", "SoilUnitID", "SoilClassID", "SoilSubClassID"]
 }
 
 Table: crop_soil_compatability
@@ -323,5 +358,5 @@ Table: crop_soil_compatability
             "description":"foreign id for soil type table"
         }
     }
-    "required": ["CompatibilityID", "CropID". "SoilTypeID"]
+    "required": ["CompatibilityID", "CropID", "SoilTypeID"]
 }
