@@ -25,7 +25,7 @@ Table: market_value
             "description":"Demand index for crop"
         }
     } 
-    "required": ["MarketValueID", "CropID", "Date", "PricePerTon"]
+    "required": ["MarketValueID", "CropID", "Date", "PricePerTon", "DemandIndex"]
 }
 
 Table: crop
@@ -35,7 +35,7 @@ Table: crop
             "type":"int",
             "description":"unique id for crop data"
         }, 
-        "Name" {
+        "CropName" {
             "type":"varchar"
             "length":100,
             "description":"name of crop"
@@ -61,7 +61,7 @@ Table: crop
             "description":"crop rotation cycle"
         },
     }
-    "required": ["CropID", "Name", "WaterRequirements"]
+    "required": ["CropID", "CropName", "CarbonFootPrint", "WaterRequirements", "ProfitabilityIndex", "RotationCompatibility"]
 }
 
 Table: crop_yield
@@ -116,7 +116,7 @@ Table: region
             "description":"climate zone that the region sits in"
         }
     }
-    "required": ["RegionID", "Name"]
+    "required": ["RegionID", "MunicipalityID", "DesertificationRisk", "ClimateZone"]
 }
 
 Table: municipality 
@@ -131,6 +131,10 @@ Table: municipality
             "length": 50,
             "description":"municipality name"
         }
+    }
+    "required": ["MunicipalityID", "Municipality"]
+}
+        
 
 Table: weather
 {
@@ -161,7 +165,7 @@ Table: weather
             "description":"rainfall in millimetres"
         }
     }
-    "required": ["CropID", "Name", "WaterRequirements"]
+    "required": ["WeatherID", "RegionID", "Date", "TemperatureMax", "TemperatureMin", "Precipitation"]
 }
 
 Table: soil_aptitude
@@ -193,7 +197,7 @@ Table: soil_class
             "type":"int",
             "description":"unique id for soil class data"
         }, 
-        "Name" {
+        "SoilClassName" {
             "type":"varchar",
             "length": 10,
             "description":"name of the soil unit"
@@ -217,7 +221,7 @@ Table: soil_class
             "description":"suitability for agricultural use"
         },
     }
-    "required": ["SoilClassID", "Name", "Limitations", "ErosionRisk","SuitableUse"]
+    "required": ["SoilClassID", "SoilClassName", "Limitations", "ErosionRisk","SuitableUse"]
 }
 
 Table: soil_subclass
@@ -227,7 +231,7 @@ Table: soil_subclass
             "type":"int",
             "description":"unique id for soil subclass"
         }, 
-        "Name" {
+        "SoilSubClassName" {
             "type":"varchar",
             "length": 100,
             "options":["e", "h", "s"],
@@ -239,7 +243,7 @@ Table: soil_subclass
             "description":"soil subclass description"
         }
     }
-    "required": ["SoilSubClassID", "Name", "Description"]
+    "required": ["SoilSubClassID", "SoilSubClassName", "Description"]
 }
 
 Table: soil_unit
@@ -249,7 +253,7 @@ Table: soil_unit
             "type":"int",
             "description":"unique id for soil unit data"
         }, 
-        "Name" {
+        "SoilUnitName" {
             "type":"varchar",
             "length": 10,
             "description":"name of the soil unit"
@@ -308,7 +312,7 @@ Table: soil_unit
             "description":"additional soil characteristics not qualified by those in this table"
         },
     }
-    "required": ["SoilUnitID", "Name", "Description"]
+    "required": ["SoilUnitID", "SoilUnitName", "Description", "",]
 }
 
 Table: soil_type
