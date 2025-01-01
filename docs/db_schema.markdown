@@ -152,7 +152,7 @@ Table: weather
             "description":"date weather data was recorded"
         },
         "TemperatureMax" {
-            "type":"varchar",
+            "type":"float",
             "length":
             "description":"minimum temperature in degrees celsius"
         },
@@ -182,7 +182,7 @@ Table: soil_aptitude
             "description":"soil aptitude use class level defined from 1 to 6"
         }, 
         "Nomenclature" {
-            "type":"varchas",
+            "type":"varchar",
             "length": 100,
             "description":"soil aptitude nomenclature"
         },
@@ -322,10 +322,6 @@ Table: soil_type
             "type":"int",
             "description":"unique id for soil type data"
         }, 
-        "RegionID" {
-            "type":"int",
-            "description":"foreign key for region table"
-        }, 
         "SoilUnitID" {
             "type":"int",
             "description":"foreign id for soil unit table"
@@ -359,4 +355,23 @@ Table: crop_soil_compatability
         }
     }
     "required": ["CompatibilityID", "CropID", "SoilTypeID"]
+}
+
+Table: region_soil_types
+{
+     "properties" {
+        "RegionSoilTypeID" {
+            "type":"int",
+            "description":"unique id for region soil type combination"
+        }, 
+        "RegionID" {
+            "type":"int",
+            "description":"foreign id for region table"
+        }, 
+        "SoilTypeID" {
+            "type":"int",
+            "description":"foreign id for soil type table"
+        }
+    }
+    "required": ["RegionSoilTypeID", "RegionID", "SoilTypeID"]
 }

@@ -14,7 +14,7 @@ select *from region r;
 
 CREATE TABLE municipality (
 	MunicipalityID INT NOT NULL PRIMARY KEY,
-    Name VARCHAR(100) NOT NULL
+    Municipality VARCHAR(100) NOT NULL
 );
 
 SELECT * FROM municipality;
