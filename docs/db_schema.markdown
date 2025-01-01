@@ -102,13 +102,13 @@ Table: region
             "type":"varchar",
             "length": 50,
             "description":"freguesia name"
-        }
+        },
         "DesertificationRisk" {
             "type":"varchar",
             "length": 20,
             "options":["susceptible", "not susceptible"],
             "description":"desertification risk for the region"
-        }
+        },
         "ClimateZone" {
             "type":"varchar",
             "length":50,
@@ -118,6 +118,19 @@ Table: region
     }
     "required": ["RegionID", "Name"]
 }
+
+Table: municipality 
+{
+    "properties" {
+        "MunicipalityID" {
+            "type":"int",
+            "description":"unique id for municipality table"
+        }, 
+        "Municipality" {
+            "type":"varchar",
+            "length": 50,
+            "description":"municipality name"
+        }
 
 Table: weather
 {
