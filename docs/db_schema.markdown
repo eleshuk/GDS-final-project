@@ -304,7 +304,7 @@ Table: soil_unit
         "Cambic" {
             "type":"int",
             "options":["0", "1"],
-            "description":"binary that indicates whether soil is calcareous or not",
+            "description":"binary that indicates whether soil is cambic or not",
         },
         "AddCharacteristics" {
             "type":"varchar",
@@ -312,7 +312,7 @@ Table: soil_unit
             "description":"additional soil characteristics not qualified by those in this table"
         },
     }
-    "required": ["SoilUnitID", "SoilUnitName", "Description", "",]
+    "required": ["SoilUnitID", "SoilUnitName", "Description", "Texture", "Salinity", "Colour", "Humic", "Molic", "Calcareous", "Normal", "Cambic", "AddCharacteristics"]
 }
 
 Table: soil_type
