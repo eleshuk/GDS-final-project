@@ -143,9 +143,9 @@ Table: weather
             "type":"int",
             "description":"unique id for weather data"
         }, 
-        "RegionID" {
+        "MunicipalityID" {
             "type":"int",
-            "description":"foreign key for region"
+            "description":"foreign key for municipality"
         }, 
         "Date" {
             "type":"date",
@@ -165,7 +165,7 @@ Table: weather
             "description":"rainfall in millimetres"
         }
     }
-    "required": ["WeatherID", "RegionID", "Date", "TemperatureMax", "TemperatureMin", "Precipitation"]
+    "required": ["WeatherID", "MunicipalityID", "Date", "TemperatureMax", "TemperatureMin", "Precipitation"]
 }
 
 Table: soil_aptitude
